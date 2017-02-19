@@ -1,0 +1,6 @@
+pre-commit
+pytest
+pytest-cov
+pytest-random
+tox
+wheel>=0.21
