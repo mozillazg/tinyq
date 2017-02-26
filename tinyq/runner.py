@@ -20,7 +20,7 @@ def setup_logging(args_obj):
     if args_obj.verbose:
         level = logging.DEBUG
     else:
-        level = logging.INFO
+        level = logging.getLevelName(args_obj.log_level.upper())
     formatter = logging.Formatter(
         fmt='%(asctime)s - %(levelname)s - %(module)s'
             ' - %(funcName)s - %(lineno)d - %(processName)s'
@@ -47,6 +47,9 @@ def parse_args():
                         )
     parser.add_argument('--app', default='app.app',
                         help='Application path (default: app.app)')
+    parser.add_argument('--log-level', default='warn',
+                        choices=('debug', 'info', 'warn', 'error', 'critical'),
+                        help='Logging level (default: warn)')
     return parser.parse_args()
 
 
