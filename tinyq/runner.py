@@ -72,14 +72,16 @@ class Worker:
             '\n'.join('* ' + name for name in _task_names)
         ))
         self.start_works()
+        self.setup_signal_handlers()
 
         while True:
             try:
                 self.worker_creator.stop_flag.wait(self.main_stop_flag_timeout)
             except KeyboardInterrupt:
-                logger.warn('Warm shutdown...')
+                logger.warn('Received Ctrl + C, warm shutdown...')
                 self.stop()
             except:
+                logger.exception('Got exception, will exit worker')
                 self.stop()
             else:
                 if self.received_stop:
@@ -131,7 +133,7 @@ class Worker:
 
     def setup_signal_handlers(self):
         def stop_process(signum, frame):
-            logger.warn('Warm shutdown...')
+            logger.warn('Received stop signal, warm shutdown...')
             self.received_stop = True
 
         signal.signal(signal.SIGINT, stop_process)
