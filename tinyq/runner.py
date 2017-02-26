@@ -22,9 +22,10 @@ def setup_logging(args_obj):
     else:
         level = logging.getLevelName(args_obj.log_level.upper())
     formatter = logging.Formatter(
-        fmt='%(asctime)s - %(levelname)s - %(module)s'
-            ' - %(funcName)s - %(lineno)d - %(processName)s'
-            ' - %(threadName)s - %(message)s'
+        fmt='%(asctime)-15s - %(levelname)s - %(name)s'
+            '[line:%(lineno)d thread:%(threadName)s(%(thread)d) '
+            'process:%(processName)s(%(process)d)]'
+            ' - %(message)s'
     )
 
     logger = logging.getLogger()
