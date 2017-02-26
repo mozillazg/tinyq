@@ -88,9 +88,13 @@ class Worker:
                     self.stop()
 
             if self.worker_creator.is_stopped():
-                break
+                for process in self.process_list[1:]:
+                    if self.worker_creator.is_alive(process):
+                        break
+                else:
+                    break
 
-        logger.warn('Exit worker.')
+        logger.warn('Exit workers.')
 
     def start_works(self):
         logger.debug('Create scheduler worker.')

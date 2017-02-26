@@ -104,6 +104,10 @@ class BaseWorkerCreator(metaclass=abc.ABCMeta):
     def is_stopped(self):
         pass
 
+    @abc.abstractmethod
+    def is_alive(self, process):
+        pass
+
 
 class ThreadWorkerCreator(BaseWorkerCreator):
     def __init__(self):
@@ -119,6 +123,9 @@ class ThreadWorkerCreator(BaseWorkerCreator):
     def is_stopped(self):
         return self.stop_flag.is_set()
 
+    def is_alive(self, process):
+        return process.is_alive()
+
 
 class ProcessWorkerCreator(BaseWorkerCreator):
     def __init__(self):
@@ -133,3 +140,6 @@ class ProcessWorkerCreator(BaseWorkerCreator):
 
     def is_stopped(self):
         return self.stop_flag.is_set()
+
+    def is_alive(self, process):
+        return process.is_alive()
