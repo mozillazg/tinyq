@@ -15,6 +15,10 @@ Install
 Usage
 -------
 
+启动一个 redis 服务 ::
+
+    $ redis-server
+
 
 app.py ::
 
