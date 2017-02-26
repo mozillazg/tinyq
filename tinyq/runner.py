@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import argparse
-from multiprocessing import cpu_count, Event, current_process
+from multiprocessing import cpu_count, current_process
 import logging
 import os
-import random
 import signal
 import sys
-import time
 
 from tinyq import __version__
 from tinyq.worker import (
@@ -54,14 +52,13 @@ def parse_args():
 
 class Worker:
     def __init__(self, schedule_queue, job_queue, worker_creator,
-                 worker_number=1, schedule_sleep_interval=1,
-                 worker_sleep_interval=1, main_sleep_interval=1,
+                 worker_number=1, schedule_sleep_interval=0.1,
+                 worker_sleep_interval=0.1,
                  main_stop_flag_timeout=0.1):
         self.schedule_queue = schedule_queue
         self.job_queue = job_queue
         self.scheduler_sleep_interval = schedule_sleep_interval
         self.worker_sleep_interval = worker_sleep_interval
-        self.main_sleep_interval = main_sleep_interval
         self.worker_creator = worker_creator()
         self.worker_number = worker_number
         self.received_stop = False
@@ -95,9 +92,10 @@ class Worker:
 
     def start_works(self):
         logger.debug('Create scheduler worker.')
-        scheduler = SchedulerWorker(self.schedule_queue, self.job_queue,
-                                    sleep_interval=self.scheduler_sleep_interval
-                                    )
+        scheduler = SchedulerWorker(
+            self.schedule_queue, self.job_queue,
+            sleep_interval=self.scheduler_sleep_interval
+        )
         scheduler_process = self.create_process(scheduler, name='Scheduler')
         self.process_list.append(scheduler_process)
 
@@ -123,6 +121,7 @@ class Worker:
                 logger.debug('Started worker: {0}'.format(name))
                 while not self.worker_creator.is_stopped():
                     worker.run_once()
+                    worker.sleep()
                 logger.warn('Exit worker {0}.'.format(name))
             except KeyboardInterrupt:
                 pass
@@ -137,10 +136,6 @@ class Worker:
 
         signal.signal(signal.SIGINT, stop_process)
         signal.signal(signal.SIGTERM, stop_process)
-
-    def sleep(self):
-        time.sleep(self.main_sleep_interval *
-                   (1 + random.SystemRandom().random()))
 
     def stop(self):
         self.worker_creator.set_stop()

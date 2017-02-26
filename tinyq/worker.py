@@ -13,7 +13,18 @@ from tinyq.queue import RedisQueue
 logger = logging.getLogger(__name__)
 
 
-class SchedulerWorker:
+class BaseWorker(metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def run_once(self):
+        pass
+
+    @abc.abstractmethod
+    def sleep(self):
+        pass
+
+
+class SchedulerWorker(BaseWorker):
     def __init__(self, schedule_queue, job_queue, sleep_interval=1):
         self.queue = schedule_queue
         self.job_queue = job_queue
@@ -27,7 +38,6 @@ class SchedulerWorker:
                 self._schedule_job(job)
         except:
             logger.exception('Raise an exception when schedule job!')
-        self.sleep()
 
     def sleep(self):
         time.sleep(self.sleep_interval * (1 + random.SystemRandom().random()))
@@ -44,7 +54,7 @@ class SchedulerWorker:
         return self.job_queue.enqueue(job.serialize())
 
 
-class JobWorker:
+class JobWorker(BaseWorker):
     def __init__(self, job_queue, sleep_interval=1):
         self.queue = job_queue
         self.sleep_interval = sleep_interval
@@ -58,7 +68,6 @@ class JobWorker:
                 logger.info('Finish run job {job}'.format(job=job))
         except:
             logger.exception('Raise an exception when run job!')
-        self.sleep()
 
     def sleep(self):
         time.sleep(self.sleep_interval * (1 + random.SystemRandom().random()))
