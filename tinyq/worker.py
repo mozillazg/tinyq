@@ -8,7 +8,6 @@ import time
 
 from tinyq.exceptions import JobFailedError
 from tinyq.job import Job
-from tinyq.queue import RedisQueue
 
 logger = logging.getLogger(__name__)
 
