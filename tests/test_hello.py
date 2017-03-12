@@ -2,4 +2,4 @@
 
 
 def test_hello():
-    assert True == True
+    assert 1 == 1

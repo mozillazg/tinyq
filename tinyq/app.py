@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from redis import StrictRedis
-
 from tinyq.constants import DEFAULT_SCHEDULE_QUEUE_KEY, DEFAULT_JOB_QUEUE_KEY
 from tinyq.queue import RedisQueue
 from tinyq.task import Task
