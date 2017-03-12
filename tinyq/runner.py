@@ -46,9 +46,9 @@ def parse_args():
     parser.add_argument('-w', '--worker-number', type=int, default=cpu_count(),
                         help='Worker number (default: {0})'.format(cpu_count())
                         )
-    parser.add_argument('--app', default='app.app',
+    parser.add_argument('-a', '--app', default='app.app',
                         help='Application path (default: app.app)')
-    parser.add_argument('--log-level', default='warn',
+    parser.add_argument('-l', '--log-level', default='warn',
                         choices=('debug', 'info', 'warn', 'error', 'critical'),
                         help='Logging level (default: warn)')
     return parser.parse_args()
