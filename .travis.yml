@@ -35,11 +35,9 @@ matrix:
     - python: 3.5
       env: TOX_ENV=py35
   allow_failures:
-    - python: 3.6
-      - env:
-        - TOX_ENV=py26
-        - TOX_ENV=py27
-        - TOX_ENV=py33
-        - TOX_ENV=py34
-        - TOX_ENV=pypy
-        - TOX_ENV=pypy3
+    - env: TOX_ENV=py26
+    - env: TOX_ENV=py27
+    - env: TOX_ENV=py33
+    - env: TOX_ENV=py34
+    - env: TOX_ENV=pypy
+    - env: TOX_ENV=pypy3
