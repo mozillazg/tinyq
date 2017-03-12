@@ -1,6 +1,5 @@
 language: python
 python:
-  - 3.5
   - 3.6
 
 sudo: false
@@ -14,7 +13,6 @@ env:
   - TOX_ENV=py27
   - TOX_ENV=py33
   - TOX_ENV=py34
-  - TOX_ENV=py35
   - TOX_ENV=py36
   - TOX_ENV=pypy
   - TOX_ENV=pypy3
@@ -33,12 +31,14 @@ after_script:
   - coveralls
 
 matrix:
-  allow_failures:
-    - python: 3.6
-      env: TOX_ENV=py35
+  include:
     - python: 3.5
-      env: TOX_ENV=py36
-    - python: 2.6
-    - python: 2.7
-    - python: pypy
-    - python: pypy3
+      env: TOX_ENV=py35
+  allow_failures:
+    - env:
+      - TOX_ENV=py26
+      - TOX_ENV=py27
+      - TOX_ENV=py33
+      - TOX_ENV=py34
+      - TOX_ENV=pypy
+      - TOX_ENV=pypy3
