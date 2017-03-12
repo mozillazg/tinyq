@@ -1,6 +1,8 @@
 tinyq
 =====
 
+|Build| |Coverage| |Pypi version|
+
 A tiny job queue framework.
 
 
@@ -61,3 +63,13 @@ app.py ::
     2017-03-12 21:27:14,068 - WARNING - tinyq.runner[line:135 thread:Worker-3(123145559314432) process:MainProcess(15388)] - Exit worker Worker-3.
     2017-03-12 21:27:14,068 - WARNING - tinyq.runner[line:101 thread:MainThread(140736379601856) process:MainProcess(15388)] - Exit workers.
     $
+
+.. |Build| image:: https://img.shields.io/travis/mozillazg/tinyq/master.svg
+   :target: https://travis-ci.org/mozillazg/tinyq
+.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/tinyq/master.svg
+   :target: https://coveralls.io/r/mozillazg/tinyq
+.. |PyPI version| image:: https://img.shields.io/pypi/v/tinyq.svg
+   :target: https://pypi.python.org/pypi/tinyq
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/tinyq.svg
+   :target: https://pypi.python.org/pypi/tinyq
+.. _Russian translation: https://github.com/mozillazg/tinyq/blob/master/README_ru.rst
