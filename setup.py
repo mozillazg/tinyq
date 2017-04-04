@@ -17,6 +17,7 @@ def long_description():
     with open('README.rst', encoding='utf8') as f:
         return f.read()
 
+
 requirements = [
     'redis',
 ]

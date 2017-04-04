@@ -35,17 +35,13 @@ class Job:
         except Exception as e:
             raise JobFailedError(self) from e
 
-    def serialize(self):
+    def dumps(self):
         obj = copy.deepcopy(self)
         obj._func = None
-        return self.dumps(obj)
-
-    @staticmethod
-    def dumps(job):
         try:
-            return pickle.dumps(job)
+            return pickle.dumps(obj)
         except Exception as e:
-            raise SerializeError(job) from e
+            raise SerializeError(self) from e
 
     @staticmethod
     def loads(data):

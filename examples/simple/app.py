@@ -10,6 +10,5 @@ def add(m, n):
 
 
 if __name__ == '__main__':
-    for m in range(10):
-        for n in range(3):
-            add.delay(m, n)
+    for m in range(3):
+        print(add.delay(m, 2))

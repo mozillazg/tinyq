@@ -1,18 +1,24 @@
 language: python
 python:
-  - 3.5
   - 3.6
 
 sudo: false
+cache: pip
+
+services:
+  - redis-server
 
 env:
-  - TOX_ENV=py26
-  - TOX_ENV=py27
-  - TOX_ENV=py33
-  - TOX_ENV=py34
-  - TOX_ENV=py35
-  - TOX_ENV=py36
-  - TOX_ENV=pypy
+  global:
+    - TINYQ_TESTING_REDIS_URI=redis://
+  matrix:
+    - TOX_ENV=py26
+    - TOX_ENV=py27
+    - TOX_ENV=py33
+    - TOX_ENV=py34
+    - TOX_ENV=py36
+    - TOX_ENV=pypy
+    - TOX_ENV=pypy3
 
 install:
   - pip install coveralls
@@ -28,11 +34,13 @@ after_script:
   - coveralls
 
 matrix:
-  allow_failures:
-    - python: 3.6
-      env: TOX_ENV=py35
+  include:
     - python: 3.5
-      env: TOX_ENV=py36
-    - python: 2.6
-    - python: 2.7
-    - python: pypy
+      env: TOX_ENV=py35
+  allow_failures:
+    - env: TOX_ENV=py26
+    - env: TOX_ENV=py27
+    - env: TOX_ENV=py33
+    - env: TOX_ENV=py34
+    - env: TOX_ENV=pypy
+    - env: TOX_ENV=pypy3

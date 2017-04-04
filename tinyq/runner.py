@@ -35,7 +35,7 @@ def setup_logging(args_obj):
     logger.addHandler(handler)
 
 
-def parse_args():
+def parse_args(args):
     parser = argparse.ArgumentParser(description='Starts a TinyQ worker.')
     parser.add_argument('-V', '--version', action='version',
                         version=__version__)
@@ -46,12 +46,12 @@ def parse_args():
     parser.add_argument('-w', '--worker-number', type=int, default=cpu_count(),
                         help='Worker number (default: {0})'.format(cpu_count())
                         )
-    parser.add_argument('--app', default='app.app',
+    parser.add_argument('-a', '--app', default='app.app',
                         help='Application path (default: app.app)')
-    parser.add_argument('--log-level', default='warn',
+    parser.add_argument('-l', '--log-level', default='warn',
                         choices=('debug', 'info', 'warn', 'error', 'critical'),
                         help='Logging level (default: warn)')
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 class Worker:
@@ -69,7 +69,7 @@ class Worker:
         self.main_stop_flag_timeout = main_stop_flag_timeout
         self.process_list = [current_process()]
 
-    def start(self):
+    def start(self):  # pragma: nocover
         logger.warn('Starting TinyQ worker, version {0}...'.format(__version__)
                     )
         logger.debug('Task names:\n{0}'.format(
@@ -166,8 +166,8 @@ def get_app(app_path):
             )
 
 
-def main():
-    args_obj = parse_args()
+def main(args=None, start_now=True):
+    args_obj = parse_args(args)
     app_path = args_obj.app
     app = get_app(app_path)
     setup_logging(args_obj)
@@ -175,7 +175,9 @@ def main():
     worker = Worker(app.schedule_queue, app.job_queue,
                     worker_creator=ThreadWorkerCreator,
                     worker_number=args_obj.worker_number)
-    worker.start()
+    if start_now:
+        worker.start()
+    return worker
 
 
 if __name__ == '__main__':
