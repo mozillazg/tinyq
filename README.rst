@@ -17,7 +17,7 @@ Install
 Usage
 -------
 
-启动一个 redis 服务 ::
+start redis server ::
 
     $ redis-server
 
@@ -35,13 +35,13 @@ app.py ::
         return m + n
 
 
-添加队列任务 ::
+add jobs ::
 
     for m in range(10):
         for n in range(3):
             add.delay(m, n)
 
-启动 worker ::
+start worker ::
 
     $ tinyq -l info
     2017-03-12 21:27:12,322 - WARNING - tinyq.runner[line:73 thread:MainThread(140736379601856) process:MainProcess(15388)] - Starting TinyQ worker, version 0.1.0...
@@ -70,6 +70,3 @@ app.py ::
    :target: https://coveralls.io/r/mozillazg/tinyq
 .. |PyPI version| image:: https://img.shields.io/pypi/v/tinyq.svg
    :target: https://pypi.python.org/pypi/tinyq
-.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/tinyq.svg
-   :target: https://pypi.python.org/pypi/tinyq
-.. _Russian translation: https://github.com/mozillazg/tinyq/blob/master/README_ru.rst
