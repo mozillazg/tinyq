@@ -34,7 +34,7 @@ class SchedulerWorker(BaseWorker):
             job = self._get_job()
             if job is not None:
                 logger.debug('Schedule new job: {job}.'.format(job=job))
-                self._schedule_job(job)
+                return self._schedule_job(job)
         except:
             logger.exception('Raise an exception when schedule job!')
 
@@ -50,7 +50,7 @@ class SchedulerWorker(BaseWorker):
 
     def _schedule_job(self, job):
         logger.debug('Put a new job({job}) into job queue.'.format(job=job))
-        return self.job_queue.enqueue(job.serialize())
+        return self.job_queue.enqueue(job.dumps())
 
 
 class JobWorker(BaseWorker):
@@ -63,8 +63,9 @@ class JobWorker(BaseWorker):
             job = self._get_job()
             if job is not None:
                 logger.info('Got a job: {job}'.format(job=job))
-                self.run_job(job)
+                result = self.run_job(job)
                 logger.info('Finish run job {job}'.format(job=job))
+                return result
         except:
             logger.exception('Raise an exception when run job!')
 
@@ -82,7 +83,7 @@ class JobWorker(BaseWorker):
         logger.debug('Start run a job: {job}'.format(job=job))
         try:
             result = job.run()
-            logger.debug('Run job({job}) success. Result: {result}'.format(
+            logger.debug('Run job({job}) success. Result: {result!r}'.format(
                          job=job, result=result))
             return result
         except JobFailedError as e:

@@ -43,7 +43,7 @@ class DelayWrapper:
             )
         )
         job = Job(func=self.func, func_args=args, func_kwargs=kwargs)
-        job_data = job.serialize()
+        job_data = job.dumps()
         self.queue.enqueue(job_data)
         return job
 

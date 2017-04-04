@@ -23,6 +23,9 @@ install:
   - pip install -r requirements.txt
   - pip install -r requirements_dev.txt
 
+before_script:
+  - export TINYQ_TESTING_REDIS_URI=redis://
+
 script:
   - pre-commit run --all-files
   - tox -e $TOX_ENV
