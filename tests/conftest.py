@@ -14,6 +14,8 @@ redis_uri = os.environ['TINYQ_TESTING_REDIS_URI']
 def app():
     instance = redis.StrictRedis.from_url(redis_uri)
     app = Application(instance)
+    instance.flushdb()
+    task._task_names.clear()
     yield app
     instance.flushdb()
     task._task_names.clear()
@@ -22,5 +24,6 @@ def app():
 @pytest.fixture()
 def redis_instance():
     instance = redis.StrictRedis.from_url(redis_uri)
+    instance.flushdb()
     yield instance
     instance.flushdb()
