@@ -9,22 +9,22 @@ services:
   - redis-server
 
 env:
-  - TOX_ENV=py26
-  - TOX_ENV=py27
-  - TOX_ENV=py33
-  - TOX_ENV=py34
-  - TOX_ENV=py36
-  - TOX_ENV=pypy
-  - TOX_ENV=pypy3
+  global:
+    - TINYQ_TESTING_REDIS_URI=redis://
+  matrix:
+    - TOX_ENV=py26
+    - TOX_ENV=py27
+    - TOX_ENV=py33
+    - TOX_ENV=py34
+    - TOX_ENV=py36
+    - TOX_ENV=pypy
+    - TOX_ENV=pypy3
 
 install:
   - pip install coveralls
   - pip install tox
   - pip install -r requirements.txt
   - pip install -r requirements_dev.txt
-
-before_script:
-  - export TINYQ_TESTING_REDIS_URI=redis://
 
 script:
   - pre-commit run --all-files
