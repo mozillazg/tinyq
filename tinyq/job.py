@@ -62,3 +62,11 @@ class Job:
         return '<Job: id: {id}, task_name: {task_name}>'.format(
             id=self.id, task_name=self.task_name
         )
+
+    def __repr__(self):
+        return (
+            '<Job: id: {id}, task_name: {task_name}, '
+            'args: {args!r}, kwargs: {kwargs!r}>'.format(
+                id=self.id, task_name=self.task_name, args=self._func_args,
+                kwargs=self._func_kwargs)
+        )
