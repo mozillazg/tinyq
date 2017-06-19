@@ -11,4 +11,4 @@ def add(m, n):
 
 if __name__ == '__main__':
     for m in range(3):
-        print(add.delay(m, 2))
+        print(repr(add.delay(m, 2)))

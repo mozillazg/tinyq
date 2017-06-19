@@ -83,7 +83,7 @@ class JobWorker(BaseWorker):
         logger.debug('Start run a job: {job}'.format(job=job))
         try:
             result = job.run()
-            logger.debug('Run job({job}) success. Result: {result!r}'.format(
+            logger.debug('Run job({job!r}) success. Result: {result!r}'.format(
                          job=job, result=result))
             return result
         except JobFailedError as e:

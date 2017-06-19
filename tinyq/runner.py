@@ -177,6 +177,8 @@ def main(args=None, start_now=True):
                     worker_number=args_obj.worker_number)
     if start_now:
         worker.start()
+        return
+
     return worker
 
 
