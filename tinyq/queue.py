@@ -14,7 +14,7 @@ class RedisQueue:
 
     def enqueue(self, data):
         """入队"""
-        return self.connection.lpush(self.key, data)
+        return self.connection.rpush(self.key, data)
 
     def dequeue(self):
         """出队"""
