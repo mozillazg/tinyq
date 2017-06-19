@@ -1,6 +1,13 @@
 CHANGELOG
 -----------
 
+0.3.0 (2017-06-19)
+=====================
+
+* Added job.__repr__ method for debug
+* Fixed exit code != 0 when quit worker
+* Fixed enqueue method. Thanks @halfcrazy
+
 
 0.2.0 (2017-04-04)
 ====================
