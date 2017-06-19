@@ -24,7 +24,7 @@ requirements = [
 
 setup(
     name='tinyq',
-    version='0.2.0',
+    version='0.3.0',
     description='A tiny job queue framework.',
     long_description=long_description(),
     url='https://github.com/mozillazg/tinyq',
